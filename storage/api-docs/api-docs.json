@@ -1,0 +1,381 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Payments API",
+        "description": "Swagger by Payments",
+        "contact": {
+            "email": ""
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api",
+            "description": "Develop API Server"
+        }
+    ],
+    "paths": {
+        "/payments": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Lista todos os pagamentos",
+                "description": "Retorna todos os pagamentos",
+                "operationId": "65567ad73dd4b0cc01c4856a6bb7e600",
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentListResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Criação do pagamento",
+                "description": "Retorna dados do pagamento",
+                "operationId": "3cb7bc2c2ad5498b4ad9521811750cc1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PaymentSaveRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Sucesso na criação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Informações inválidas ou incompletas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Identification": {
+                "title": "Identification",
+                "description": "Identification model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "string",
+                        "example": "9c253550-25ae-4574-8435-86f77ed2abf9"
+                    },
+                    "type": {
+                        "title": "type",
+                        "description": "Tipo do pagador",
+                        "type": "string",
+                        "example": "CPF"
+                    },
+                    "number": {
+                        "title": "number",
+                        "description": "number",
+                        "type": "string",
+                        "example": "9999999999"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Identification"
+                }
+            },
+            "Payer": {
+                "title": "Payer",
+                "description": "Payer model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "string",
+                        "example": "9c253550-25ae-4574-8435-86f77ed2abf9"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Email do pagador",
+                        "type": "string",
+                        "example": "teste@gmail.com"
+                    },
+                    "identification": {
+                        "$ref": "#/components/schemas/Identification"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Payer"
+                }
+            },
+            "Payment": {
+                "title": "Payment",
+                "description": "Payment model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "string",
+                        "example": "9c253550-25ae-4574-8435-86f77ed2abf9"
+                    },
+                    "transaction_amount": {
+                        "title": "transaction_amount",
+                        "description": "Valor da transação",
+                        "type": "number",
+                        "format": "float",
+                        "example": "15"
+                    },
+                    "installments": {
+                        "title": "installments",
+                        "description": "Parcelas",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "token": {
+                        "title": "token",
+                        "description": "Token",
+                        "type": "string",
+                        "example": "weqwewqewqeeewqeewqew"
+                    },
+                    "payment_method_id": {
+                        "title": "payment_method_id",
+                        "description": "Metodo de pagamento",
+                        "type": "string",
+                        "example": "42"
+                    },
+                    "notification_url": {
+                        "title": "notification_url",
+                        "description": "URL de notificação do webhook",
+                        "type": "string",
+                        "example": "http://localhost/rest/webhook/payment"
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "Status do pagamento",
+                        "type": "string",
+                        "example": "PAID"
+                    },
+                    "payer": {
+                        "$ref": "#/components/schemas/Payer"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Payment"
+                }
+            },
+            "IdentificationRequest": {
+                "title": "IdentificationRequest",
+                "description": "Requisição com idenficação do pagador",
+                "required": [
+                    "type",
+                    "number"
+                ],
+                "properties": {
+                    "type": {
+                        "title": "type",
+                        "description": "Tipo do pagador",
+                        "type": "string",
+                        "example": "CPF"
+                    },
+                    "number": {
+                        "title": "number",
+                        "description": "number",
+                        "type": "string",
+                        "example": "9999999999"
+                    }
+                },
+                "type": "object"
+            },
+            "PayerRequest": {
+                "title": "PayerRequest",
+                "description": "Requisição com body para salvar o pagador",
+                "required": [
+                    "email",
+                    "identification"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "Email do pagador",
+                        "type": "string",
+                        "example": "teste@gmail.com"
+                    },
+                    "identification": {
+                        "$ref": "#/components/schemas/IdentificationRequest"
+                    }
+                },
+                "type": "object"
+            },
+            "PaymentSaveRequest": {
+                "title": "PaymentSaveRequest",
+                "description": "Requisição com body para salvar o pagamento",
+                "required": [
+                    "transaction_amount",
+                    "installments"
+                ],
+                "properties": {
+                    "transaction_amount": {
+                        "title": "transaction_amount",
+                        "description": "Valor da transação",
+                        "type": "number",
+                        "format": "float",
+                        "example": "15"
+                    },
+                    "installments": {
+                        "title": "installments",
+                        "description": "Parcelas",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "token": {
+                        "title": "token",
+                        "description": "Token",
+                        "type": "string",
+                        "example": "weqwewqewqeeewqeewqew"
+                    },
+                    "payment_method_id": {
+                        "title": "payment_method_id",
+                        "description": "Metodo de pagamento",
+                        "type": "string",
+                        "example": "42"
+                    },
+                    "notification_url": {
+                        "title": "notification_url",
+                        "description": "URL de notificação do webhook",
+                        "type": "string",
+                        "example": "http://localhost/rest/webhook/payment"
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "Status do pagamento",
+                        "type": "string",
+                        "example": "PAID"
+                    },
+                    "payer": {
+                        "$ref": "#/components/schemas/PayerRequest"
+                    }
+                },
+                "type": "object"
+            },
+            "BaseResource": {
+                "title": "BaseResource",
+                "description": "Base resource",
+                "properties": {
+                    "result": {
+                        "title": "Result",
+                        "description": "resultado",
+                        "type": "string"
+                    },
+                    "ok": {
+                        "title": "Status da requisição",
+                        "description": "Se requisição foi um sucesso ou não",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "description": {
+                        "title": "Descrição da resposta",
+                        "description": "Detalhes da resposta",
+                        "type": "string",
+                        "example": "sucesso"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "BaseResource"
+                }
+            },
+            "PaymentListResource": {
+                "title": "PaymentListResource",
+                "description": "Payment resource",
+                "type": "object",
+                "xml": {
+                    "name": "PaymentListResource"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BaseResource"
+                    },
+                    {
+                        "properties": {
+                            "result": {
+                                "title": "Result",
+                                "description": "Data wrapper",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Payment"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "PaymentResource": {
+                "title": "PaymentResource",
+                "description": "Payment resource",
+                "type": "object",
+                "xml": {
+                    "name": "PaymentResource"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BaseResource"
+                    },
+                    {
+                        "properties": {
+                            "result": {
+                                "$ref": "#/components/schemas/Payment"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            }
+        },
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "http",
+                "description": "Enter token in format (Bearer <token>)",
+                "scheme": "bearer",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
