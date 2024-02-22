@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\IdentificationType;
 use App\Enums\PaymentStatus;
+use App\Helpers\ValidateDocuments;
 use App\Http\Requests\PaymentSaveRequest;
 use App\Http\Requests\PaymentStatusRequest;
 use App\Models\Customer;
@@ -107,12 +109,27 @@ class PaymentController extends Controller
     public function store(PaymentSaveRequest $request)
     {
         try {
+            $document = $request->payer['identification']['number'];
+            $type = $request->payer['identification']['type'];
+            $valid = $type == IdentificationType::CPF ?
+                ValidateDocuments::validateCPF($document) : ValidateDocuments::validateCNPJ($document);
+            if (!$valid) {
+                return $this->unprocessableContent(new MessageBag(
+                    [
+                        'payer.identification.number' => [
+                            $type == IdentificationType::CPF ?
+                                'The payer.identification.number field must be a valid CPF document.' :
+                                'The payer.identification.number field must be a valid CNPJ document.'
+                        ]
+                    ]
+                ));
+            }
             $payment = Payment::create([
                 'transaction_amount' => $request->transaction_amount,
                 'installments' => $request->installments,
                 'token' => $request->token,
                 'payment_method_id' => $request->payment_method_id,
-                'notification_url' => $request->notification_url,
+                'notification_url' => env('NOTIFICATION_URL_PAYMENT'),
                 'status' => $request->status,
             ]);
             $payer = Payer::create([

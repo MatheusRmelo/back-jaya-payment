@@ -74,6 +74,18 @@ trait ApiResponse
         ], 404);
     }
 
+
+
+    protected function unprocessableContent(MessageBag|null $errors, string $message = 'Requisição inválida'): JsonResponse
+    {
+        return response()->json([
+            'ok' => false,
+            'result' => null,
+            'errors' => $errors,
+            'message' => $message
+        ], 422);
+    }
+
     protected function serverError($result = null, string $message = 'Falha no servidor'): JsonResponse
     {
         return response()->json([

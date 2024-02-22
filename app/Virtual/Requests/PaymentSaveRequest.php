@@ -59,17 +59,6 @@ class PaymentSaveRequest
 
     /**
      * @OA\Property(
-     *      title="notification_url",
-     *      description="URL de notificação do webhook",
-     *      example="http://localhost/rest/webhook/payment"
-     * )
-     *
-     * @var string
-     */
-    public $notification_url;
-
-    /**
-     * @OA\Property(
      *      title="status",
      *      description="Status do pagamento",
      *      example="PAID"

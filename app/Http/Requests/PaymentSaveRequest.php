@@ -29,7 +29,6 @@ class PaymentSaveRequest extends FormRequest
             'installments' => 'required|integer',
             'token' => 'required|string',
             'payment_method_id' => 'required|string',
-            'notification_url' => 'required|string',
             'status' => [
                 'required',
                 'string',
