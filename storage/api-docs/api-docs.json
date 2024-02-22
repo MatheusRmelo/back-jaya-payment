@@ -86,6 +86,121 @@
                     }
                 ]
             }
+        },
+        "/payments/{id}": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Mostra um pagamento",
+                "description": "Retorna dados do pagamento",
+                "operationId": "a4207c19fecbebc99932a8348b19adf1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID do pagamento",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso na pesquisar",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pagamento não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Cancela um pagamento",
+                "description": "Muda para CANCELED o status do pagamento",
+                "operationId": "6ee6ad54e3a047f39a06ffcb4cfc6b7a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID do pagamento",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Cliente não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Atualização do status de um pagamento",
+                "description": "Atualiza o status de um pagamento",
+                "operationId": "6085f97e4e644648908760d7570f3f3b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID do pagamento",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PaymentStatusRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Pagamento não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -289,6 +404,22 @@
                     },
                     "payer": {
                         "$ref": "#/components/schemas/PayerRequest"
+                    }
+                },
+                "type": "object"
+            },
+            "PaymentStatusRequest": {
+                "title": "PaymentStatusRequest",
+                "description": "Requisição com body para atualizar status do pagamento",
+                "required": [
+                    "status"
+                ],
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "description": "Status do pagamento",
+                        "type": "string",
+                        "example": "PAID"
                     }
                 },
                 "type": "object"

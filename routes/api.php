@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('payments', PaymentController::class);
+Route::patch('payments/{payment}', [PaymentController::class, 'updateStatus']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
