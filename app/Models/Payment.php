@@ -11,6 +11,12 @@ class Payment extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'installments' => 'integer',
+        'transaction_amount' => 'float'
+    ];
+
+
     protected $fillable = [
         'transaction_amount',
         'installments',
