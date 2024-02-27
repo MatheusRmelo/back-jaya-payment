@@ -433,7 +433,7 @@
                         "type": "boolean",
                         "example": true
                     },
-                    "description": {
+                    "message": {
                         "title": "Descrição da resposta",
                         "description": "Detalhes da resposta",
                         "type": "string",

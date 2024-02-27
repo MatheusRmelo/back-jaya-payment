@@ -43,5 +43,5 @@ class BaseResource
      *
      * @var string
      */
-    private $description;
+    private $message;
 }
