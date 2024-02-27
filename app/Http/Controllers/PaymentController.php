@@ -146,7 +146,8 @@ class PaymentController extends Controller
             $payment->payer->identification;
             return $this->create($payment, 'Sucesso ao criar o pagamento');
         } catch (Exception $err) {
-            return $this->serverError(null,  env('APP_DEBUG') ? $err->getMessage() : 'Falha ao criar pagamento');
+            $message = mb_convert_encoding($err->getMessage(), 'ASCII');
+            return $this->serverError(null,  env('APP_DEBUG') ? $message : 'Falha ao criar pagamento');
         }
     }
 
