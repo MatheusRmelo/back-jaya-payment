@@ -1,66 +1,53 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Jaya Desafio
+Projeto para visualizar visualizar, confirmar, cancelar e solicitar pagamento.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Tecnologias
+Laravel (Framework)
+PHP (Linguagem)
+MySQL (Database)
 
-## About Laravel
+## Docker
+Configure o banco de dados criando um arquivo `.env` copie do `env.example` <br>
+Configurações do banco <br>
+````
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=payments
+DB_USERNAME=root
+DB_PASSWORD=123456
+````
+<br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Depois configure para o frontend em React (SE QUISER RODAR EM CONJUNTO) está no mesmo nível do diretório do Laravel que contém o docker-compose e com o nome `front-payment` <br>
+ou altere no docker-compose.yml o valor `client.build.context` para `o valor da pasta do React` <br>
+por fim execute o comando para iniciar o build e os containers `docker compose up -d ` <br>
+Após isso configure o APP_KEY executando `docker exec -it app php artisan key:generate` <br>
+E por fim rode as migrations com o comando `docker exec -it app php artisan migrate` <br>
+Caso queira rodar os testes faça `docker exec -it app php artisan test`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalação manual
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# Instalação dos pacotes
+Após instalar o PHP e o composer <br>
+instale as dependências `composer install` <br>
 
-## Learning Laravel
+Configure o .env caso não exista copiando do .env.example<br>
+Se APP_KEY do .env estiver vazio rode `php artisan key:generate` <br>
+Coloque os dados do MySQL no .env<br>
+````
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=NOME_DO_BANCO_CRIADO
+DB_USERNAME=USUARIO_DO_SERVER_MYSQL
+DB_PASSWORD=SENHA_DO_SERVER_MYSQL
+````
+para criar tabelas `php artisan migrate` <br>
+rodar servidor ```php artisan serve```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Tests
+Os testes de integração rodam em um banco temporário SQLITE, então não precisa configuração extra. E os testes unitários não exigem banco de dados. <br>
+Execute <br>
+`php artisan test`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
