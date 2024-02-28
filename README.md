@@ -1,5 +1,5 @@
 # Jaya Desafio
-Projeto para visualizar visualizar, confirmar, cancelar e solicitar pagamento.
+Projeto para visualizar, confirmar, cancelar e solicitar pagamento.
 
 ## Tecnologias
 Laravel (Framework)
@@ -19,7 +19,7 @@ DB_PASSWORD=123456
 ````
 <br>
 
-Depois configure para o frontend em React (SE QUISER RODAR EM CONJUNTO) está no mesmo nível do diretório do Laravel que contém o docker-compose e com o nome `front-payment` <br>
+Depois configure para o frontend em React (SE QUISER RODAR EM CONJUNTO) está no mesmo nível do diretório do Laravel que contém o docker-compose e com o nome `front-jaya-payment` <br>
 ou altere no docker-compose.yml o valor `client.build.context` para `o valor da pasta do React` <br>
 por fim execute o comando para iniciar o build e os containers `docker compose up -d ` <br>
 Após isso configure o APP_KEY executando `docker exec -it app php artisan key:generate` <br>
