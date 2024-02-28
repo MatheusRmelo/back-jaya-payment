@@ -3,7 +3,7 @@ services:
     #React Client Service
     client:
         build:
-            context: ../front-payment
+            context: ../front-jaya-payment
             dockerfile: Dockerfile
         container_name: client
         restart: unless-stopped
